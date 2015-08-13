@@ -15,7 +15,9 @@ Sistema operativo: Multiplataforma
 3. Diferencias finitas
   * Método de Liebmann
   * Método simple implícito
-4. Elementos finitos
+4. Volumenes finitos
+5. Cálculo variacional
+6. Elementos finitos
   * Métodos analíticos aproximados
     * Método de Galerkin
   * Polinomios de Lagrange
@@ -50,3 +52,5 @@ Sistema operativo: Multiplataforma
     * Elementos triangulares
       * Coordenadas globales
   * Esfuerzo plano 
+7. Elementos finitos discontinuos
+8. Elementos finitos mixtos
