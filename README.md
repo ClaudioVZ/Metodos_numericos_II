@@ -6,10 +6,10 @@ Intérprete: IPython
 
 Sistema operativo: Multiplataforma
 
-1. Introducción
+1. Introducción a Julia
+2. Ecuaciones diferenciales ordinarias 
   * Modelos matemáticos
   * Errores
-2. Ecuaciones diferenciales ordinarias 
   * Método de Euler
   * Métodos de Runge-Kutta
 3. Diferencias finitas
