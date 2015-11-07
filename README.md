@@ -7,6 +7,9 @@ Intérprete: IPython
 Sistema operativo: Multiplataforma
 
 1. Introducción a Julia
+  * A
+  * B
+  * C
 2. Ecuaciones diferenciales ordinarias 
   * Modelos matemáticos
   * Errores
@@ -14,7 +17,7 @@ Sistema operativo: Multiplataforma
   * Métodos de Runge-Kutta
 3. Diferencias finitas
   * Método de Liebmann
-  * Método simple implícito
+  * Método implícito simple
 4. Volumenes finitos
 5. Cálculo variacional
 6. Elementos finitos
@@ -24,30 +27,30 @@ Sistema operativo: Multiplataforma
     * Coordenadas globales
     * Coordenadas locales
   * Elemento barra en tracción-compresión
-    * Ejemplo 1
-      * Coordenadas globales
-      * Coordenadas locales
-    * Ejemplo 2
-      * Coordenadas globales
-      * Coordenadas locales
-    * Ejemplo 3
-      * Coordenadas locales
+    * Coordenadas globales
+      * Ejemplo 1
+      * Ejemplo 2
+      * Ejemplo 3
+    * Coordenadas locales
+      * Ejemplo 1
+      * Ejemplo 2
+      * Ejemplo 3
   * Elemento barra en torsión
   * Polinomios de Hermite
     * Coordenadas globales
     * Coordenadas locales
   * Elemento viga Euler-Bernoulli
-    * Ejemplo 1
-      * Coordenadas globales
-      * Coordenadas locales
-    * Ejemplo 2
-      * Coordenadas globales
-      * Coordenadas locales
+    * Coordenadas globales
+      * Ejemplo 1
+      * Ejemplo 2
+    * Coordenadas locales
+      * Ejemplo 1
+      * Ejemplo 2
   * Coordenadas naturales
     * Elemento barra
-    * Elemento viga Euler-Bernoulli
-    * Ejemplo 1
+    * Ejemplo 3
       * Elemento barra
+    * Elemento viga Euler-Bernoulli
   * Funciones de forma bidimensionales
     * Elementos triangulares
       * Coordenadas globales
