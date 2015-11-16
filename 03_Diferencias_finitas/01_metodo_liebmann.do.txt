@@ -1,0 +1,785 @@
+
+# Método de diferencias finitas
+
+## Ecuación de Laplace
+
+!bt
+\begin{equation*}
+    \frac{\partial^{2} T}{\partial x^{2}} + \frac{\partial^{2} T}{\partial y^{2}} = 0
+\end{equation*}
+!et
+
+Usando diferencias finitas centradas
+
+!bt
+\begin{align*}
+    \frac{\partial^{2} T}{\partial x^{2}} &= \frac{T_{i+1, j} - 2 T_{i, j} + T_{i-1, j}}{\Delta x^{2}} \\
+    \frac{\partial^{2} T}{\partial y^{2}} &= \frac{T_{i, j+1} - 2 T_{i, j} + T_{i, j-1}}{\Delta y^{2}}
+\end{align*}
+!et
+
+Sustituyendo
+
+!bt
+\begin{equation*}
+    \frac{T_{i+1, j} - 2 T_{i, j} + T_{i-1, j}}{\Delta x^{2}} + \frac{T_{i, j+1} - 2 T_{i, j} + T_{i, j-1}}{\Delta y^{2}} = 0
+\end{equation*}
+!et
+
+Para una malla cuadrada $\Delta x^{2} = \Delta y^{2}$
+
+!bt
+\begin{equation*}
+    \frac{T_{i+1, j} - 2 T_{i, j} + T_{i-1, j}}{\Delta x^{2}} + \frac{T_{i, j+1} - 2 T_{i, j} + T_{i, j-1}}{\Delta x^{2}} = 0
+\end{equation*}
+!et
+
+reordenando
+
+!bt
+\begin{equation*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} = 0
+\end{equation*}
+!et
+
+### Condiciones de frontera de Dirichlet
+
+!bt
+\begin{align*}
+    \frac{\partial^{2} T}{\partial x^{2}} + \frac{\partial^{2} T}{\partial y^{2}} &= 0 \\
+    T(0,y) &= 75 \\
+    T(4,y) &= 50 \\
+    T(x,4) &= 100 \\
+    T(x,0) &= 0
+\end{align*}
+!et
+
+**Nodo (1,1)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{1-1, 1} - 4 T_{1, 1} + T_{1+1, 1} + T_{1, 1-1} + T_{1, 1+1} &= 0 \\
+    T_{0, 1} - 4 T_{1, 1} + T_{2, 1} + T_{1, 0} + T_{1, 2} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_1.svg">
+
+!bt
+\begin{align*}
+    75 - 4 T_{1, 1} + T_{2, 1} + 0 + T_{1, 2} &= 0 \\
+    - 4 T_{1, 1} + T_{1, 2} + T_{2, 1} &= -75
+\end{align*}
+!et
+
+**Nodo (2,1)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{2-1, 1} - 4 T_{2, 1} + T_{2+1, 1} + T_{2, 1-1} + T_{2, 1+1} &= 0 \\
+    T_{1, 1} - 4 T_{2, 1} + T_{3, 1} + T_{2, 0} + T_{2, 2} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_2.svg">
+
+!bt
+\begin{align*}
+    T_{1, 1} - 4 T_{2, 1} + T_{3, 1} + 0 + T_{2, 2} &= 0 \\
+    T_{1, 1} - 4 T_{2, 1} + T_{2, 2} + T_{3, 1} &= 0
+\end{align*}
+!et
+
+**Nodo (3,1)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{3-1, 1} - 4 T_{3, 1} + T_{3+1, 1} + T_{3, 1-1} + T_{3, 1+1} &= 0 \\
+    T_{2, 1} - 4 T_{3, 1} + T_{4, 1} + T_{3, 0} + T_{3, 2} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_3.svg">
+
+!bt
+\begin{align*}
+    T_{2, 1} - 4 T_{3, 1} + 50 + 0 + T_{3, 2} &= 0 \\
+    T_{2, 1} - 4 T_{3, 1} + T_{3, 2} &= -50
+\end{align*}
+!et
+
+**Nodo (1,2)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{1-1, 2} - 4 T_{1, 2} + T_{1+1, 2} + T_{1, 2-1} + T_{1, 2+1} &= 0 \\
+    T_{0, 2} - 4 T_{1, 2} + T_{2, 2} + T_{1, 1} + T_{1, 3} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_4.svg">
+
+!bt
+\begin{align*}
+    75 - 4 T_{1, 2} + T_{2, 2} + T_{1, 1} + T_{1, 3} &= 0 \\
+    T_{1, 1} - 4 T_{1, 2} + T_{1, 3} + T_{2, 2} &= -75
+\end{align*}
+!et
+
+**Nodo (2,2)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{2-1, 2} - 4 T_{2, 2} + T_{2+1, 2} + T_{2, 2-1} + T_{2, 2+1} &= 0 \\
+    T_{1, 2} - 4 T_{2, 2} + T_{3, 2} + T_{2, 1} + T_{2, 3} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_5.svg">
+
+!bt
+\begin{align*}
+    T_{1, 2} + T_{2, 1} - 4 T_{2, 2} + T_{2, 3} + T_{3, 2} &= 0
+\end{align*}
+!et
+
+**Nodo (3,2)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{3-1, 2} - 4 T_{3, 2} + T_{3+1, 2} + T_{3, 2-1} + T_{3, 2+1} &= 0 \\
+    T_{2, 2} - 4 T_{3, 2} + T_{4, 2} + T_{3, 1} + T_{3, 3} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_6.svg">
+
+!bt
+\begin{align*}
+    T_{2, 2} - 4 T_{3, 2} + 50 + T_{3, 1} + T_{3, 3} &= 0 \\
+    T_{2, 2} + T_{3, 1} - 4 T_{3, 2} + T_{3, 3} &= -50
+\end{align*}
+!et
+
+**Nodo (1,3)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{1-1, 3} - 4 T_{1, 3} + T_{1+1, 3} + T_{1, 3-1} + T_{1, 3+1} &= 0 \\
+    T_{0, 3} - 4 T_{1, 3} + T_{2, 3} + T_{1, 2} + T_{1, 4} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_7.svg">
+
+!bt
+\begin{align*}
+    75 - 4 T_{1, 3} + T_{2, 3} + T_{1, 2} + 100 &= 0 \\
+    T_{1, 2} - 4 T_{1, 3} + T_{2, 3} &= -175
+\end{align*}
+!et
+
+**Nodo (2,3)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{2-1, 3} - 4 T_{2, 3} + T_{2+1, 3} + T_{2, 3-1} + T_{2, 3+1} &= 0 \\
+    T_{1, 3} - 4 T_{2, 3} + T_{3, 3} + T_{2, 2} + T_{2, 4} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_8.svg">
+
+!bt
+\begin{align*}
+    T_{1, 3} - 4 T_{2, 3} + T_{3, 3} + T_{2, 2} + 100 &= 0 \\
+    T_{1, 3} + T_{2, 2} - 4 T_{2, 3} + T_{3, 3} &= -100
+\end{align*}
+!et
+
+**Nodo (3,3)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{3-1, 3} - 4 T_{3, 3} + T_{3+1, 3} + T_{3, 3-1} + T_{3, 3+1} &= 0 \\
+    T_{2, 3} - 4 T_{3, 3} + T_{4, 3} + T_{3, 2} + T_{3, 4} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_9.svg">
+
+!bt
+\begin{align*}
+    T_{2, 3} - 4 T_{3, 3} + 50 + T_{3, 2} + 100 &= 0 \\
+    T_{2, 3} + T_{3, 2} - 4 T_{3, 3} &= -150
+\end{align*}
+!et
+
+Sistema de ecuaciones del problema
+
+!bt
+\begin{align*}
+    - 4 T_{1, 1} + T_{1, 2} + T_{2, 1} &= -75 \\
+    T_{1, 1} - 4 T_{2, 1} + T_{2, 2} + T_{3, 1} &= 0 \\
+    T_{2, 1} - 4 T_{3, 1} + T_{3, 2} &= -50 \\
+    T_{1, 1} - 4 T_{1, 2} + T_{1, 3} + T_{2, 2} &= -75 \\
+    T_{1, 2} + T_{2, 1} - 4 T_{2, 2} + T_{2, 3} + T_{3, 2} &= 0 \\
+    T_{2, 2} + T_{3, 1} - 4 T_{3, 2} + T_{3, 3} &= -50 \\
+    T_{1, 2} - 4 T_{1, 3} + T_{2, 3} &= -175 \\
+    T_{1, 3} + T_{2, 2} - 4 T_{2, 3} + T_{3, 3} &= -100 \\
+    T_{2, 3} + T_{3, 2} - 4 T_{3, 3} &= -150
+\end{align*}
+!et
+
+en forma matricial presenta una matriz dispersa
+
+!bt
+\begin{equation*}
+    \begin{bmatrix}
+    -4 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+    1 & 0 & 0 & -4 & 1 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 0 & -4 & 1 & 0 \\
+    1 & -4 & 1 & 0 & 1 & 0 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 1 & -4 & 1 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 0 & 1 & 0 & 1 & -4 & 1 \\
+    0 & 1 & -4 & 0 & 0 & 1 & 0 & 0 & 0 \\
+    0 & 0 & 1 & 0 & 1 & -4 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 0 & 0 & 1 & 0 & 1 & -4
+    \end{bmatrix}
+    \begin{bmatrix}
+    T_{1,1} \\
+    T_{1,2} \\
+    T_{1,3} \\
+    T_{2,1} \\
+    T_{2,2} \\
+    T_{2,3} \\
+    T_{3,1} \\
+    T_{3,2} \\
+    T_{3,3}
+    \end{bmatrix} =
+    \begin{bmatrix}
+    -75 \\
+    0 \\
+    -50 \\
+    -75 \\
+    0 \\
+    -50 \\
+    -175 \\
+    -100 \\
+    -150
+    \end{bmatrix}
+\end{equation*}
+!et
+
+en forma reducida
+
+!bt
+\begin{equation*}
+    Ax = B
+\end{equation*}
+!et
+
+
+```julia
+A = [[-4 1 0 1 0 0 0 0 0],
+    [ 1 0 0 -4 1 0 1 0 0],
+    [0 0 0 1 0 0 -4 1 0],
+    [1 -4 1 0 1 0 0 0 0],
+    [0 1 0 1 -4 1 0 1 0],
+    [0 0 0 0 1 0 1 -4 1],
+    [0 1 -4 0 0 1 0 0 0],
+    [0 0 1 0 1 -4 0 0 1],
+    [0 0 0 0 0 1 0 1 -4]];
+```
+
+
+```julia
+B = [[-75],
+    [0],
+    [-50],
+    [-75],
+    [0],
+    [-50],
+    [-175],
+    [-100],
+    [-150]];
+```
+
+
+```julia
+x = inv(A)*B;
+```
+
+
+```julia
+x = transpose(reshape(x,3,3))
+
+for i=1:3
+    for j=1:3
+        println("T[$i,$j] = $(x[i,j])")
+    end
+end
+```
+
+    T[1,1] = 42.85714285714286
+    T[1,2] = 63.16964285714287
+    T[1,3] = 78.57142857142857
+    T[2,1] = 33.25892857142858
+    T[2,2] = 56.25000000000001
+    T[2,3] = 76.11607142857143
+    T[3,1] = 33.92857142857144
+    T[3,2] = 52.45535714285715
+    T[3,3] = 69.64285714285714
+
+
+### Condiciones de frontera de Neumann
+
+!bt
+\begin{align*}
+    \frac{\partial^{2} T}{\partial x^{2}} + \frac{\partial^{2} T}{\partial y^{2}} &= 0 \\
+    T(0,y) &= 75 \\
+    T(4,y) &= 50 \\
+    T(x,4) &= 100 \\
+    \frac{\partial}{\partial y} T(x,0) &= 0
+\end{align*}
+!et
+
+**Nodo (1,0)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{1-1, 0} - 4 T_{1, 0} + T_{1+1, 0} + T_{1, 0-1} + T_{1, 0+1} &= 0 \\
+    T_{0, 0} - 4 T_{1, 0} + T_{2, 0} + T_{1, -1} + T_{1, 1} &= 0
+\end{align*}
+!et
+
+aproximando $T_{y}$ con una diferencia finita centrada
+
+!bt
+\begin{equation*}
+    \frac{\partial T}{\partial y} = \frac{T_{i, j-1} - T_{i, j+1}}{2 \Delta y} = \frac{T_{1, 0-1} - T_{1, 0+1}}{2 \Delta y} = \frac{T_{1, -1} - T_{1, 1}}{2 \Delta y}
+\end{equation*}
+!et
+
+despejando $T_{1, -1}$
+
+!bt
+\begin{equation*}
+    T_{1, -1} = 2 \Delta y \frac{\partial T}{\partial y} + T_{1, 1}
+\end{equation*}
+!et
+
+reemplazando
+
+!bt
+\begin{align*}
+    T_{0, 0} - 4 T_{1, 0} + T_{2, 0} + 2 \Delta y \frac{\partial T}{\partial y} + T_{1, 1} + T_{1, 1} &= 0 \\
+    T_{0, 0} - 4 T_{1, 0} + T_{2, 0} + 2 \Delta y \frac{\partial T}{\partial y} + 2 T_{1, 1} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_10.svg">
+
+!bt
+\begin{align*}
+    75 - 4 T_{1, 0} + T_{2, 0} + 2 (1) (0) + 2 T_{1, 1} &= 0 \\
+    - 4 T_{1, 0} + 2 T_{1, 1} + T_{2, 0} &= -75
+\end{align*}
+!et
+
+**Nodo (2,0)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{2-1, 0} - 4 T_{2, 0} + T_{2+1, 0} + T_{2, 0-1} + T_{2, 0+1} &= 0 \\
+    T_{1, 0} - 4 T_{2, 0} + T_{3, 0} + T_{2, -1} + T_{2, 1} &= 0
+\end{align*}
+!et
+
+aproximando $T_{y}$ con una diferencia finita centrada
+
+!bt
+\begin{equation*}
+    \frac{\partial T}{\partial y} = \frac{T_{i, j-1} - T_{i, j+1}}{2 \Delta y} = \frac{T_{2, 0-1} - T_{2, 0+1}}{2 \Delta y} = \frac{T_{2, -1} - T_{2, 1}}{2 \Delta y}
+\end{equation*}
+!et
+
+despejando $T_{2, -1}$
+
+!bt
+\begin{equation*}
+    T_{2, -1} = 2 \Delta y \frac{\partial T}{\partial y} + T_{2, 1}
+\end{equation*}
+!et
+
+reemplazando
+
+!bt
+\begin{align*}
+    T_{1, 0} - 4 T_{2, 0} + T_{3, 0} + 2 \Delta y \frac{\partial T}{\partial y} + T_{2, 1} + T_{2, 1} &= 0 \\
+    T_{1, 0} - 4 T_{2, 0} + T_{3, 0} + 2 \Delta y \frac{\partial T}{\partial y} + 2 T_{2, 1} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_11.svg">
+
+!bt
+\begin{align*}
+    T_{1, 0} - 4 T_{2, 0} + T_{3, 0} + 2 (1) (0) + 2 T_{2, 1} &= 0 \\
+    T_{1, 0} - 4 T_{2, 0} + 2 T_{2, 1} + T_{3, 0} &= 0
+\end{align*}
+!et
+
+**Nodo (3,0)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{3-1, 0} - 4 T_{3, 0} + T_{3+1, 0} + T_{3, 0-1} + T_{3, 0+1} &= 0 \\
+    T_{2, 0} - 4 T_{3, 0} + T_{4, 0} + T_{3, -1} + T_{3, 1} &= 0
+\end{align*}
+!et
+
+aproximando $T_{y}$ con una diferencia finita centrada
+
+!bt
+\begin{equation*}
+    \frac{\partial T}{\partial y} = \frac{T_{i, j-1} - T_{i, j+1}}{2 \Delta y} = \frac{T_{3, 0-1} - T_{3, 0+1}}{2 \Delta y} = \frac{T_{3, -1} - T_{3, 1}}{2 \Delta y}
+\end{equation*}
+!et
+
+despejando $T_{3, -1}$
+
+!bt
+\begin{equation*}
+    T_{3, -1} = 2 \Delta y \frac{\partial T}{\partial y} + T_{3, 1}
+\end{equation*}
+!et
+
+reemplazando
+
+!bt
+\begin{align*}
+    T_{2, 0} - 4 T_{3, 0} + T_{4, 0} + 2 \Delta y \frac{\partial T}{\partial y} + T_{3, 1} + T_{3, 1} &= 0 \\
+    T_{2, 0} - 4 T_{3, 0} + T_{4, 0} + 2 \Delta y \frac{\partial T}{\partial y} + 2 T_{3, 1} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_12.svg">
+
+!bt
+\begin{align*}
+    T_{2, 0} - 4 T_{3, 0} + 50 + 2 (1) (0) + 2 T_{3, 1} &= 0 \\
+    T_{2, 0} - 4 T_{3, 0} + 2 T_{3, 1} &= -50
+\end{align*}
+!et
+
+**Nodo (1,1)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{1-1, 1} - 4 T_{1, 1} + T_{1+1, 1} + T_{1, 1-1} + T_{1, 1+1} &= 0 \\
+    T_{0, 1} - 4 T_{1, 1} + T_{2, 1} + T_{1, 0} + T_{1, 2} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_13.svg">
+
+!bt
+\begin{align*}
+    75 - 4 T_{1, 1} + T_{2, 1} + T_{1, 0} + T_{1, 2} &= 0 \\
+    T_{1, 0} - 4 T_{1, 1} + T_{1, 2} + T_{2, 1} &= -75
+\end{align*}
+!et
+
+**Nodo (2,1)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{2-1, 1} - 4 T_{2, 1} + T_{2+1, 1} + T_{2, 1-1} + T_{2, 1+1} &= 0 \\
+    T_{1, 1} - 4 T_{2, 1} + T_{3, 1} + T_{2, 0} + T_{2, 2} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_14.svg">
+
+!bt
+\begin{align*}
+    T_{1, 1} + T_{2, 0} - 4 T_{2, 1} + T_{2, 2} + T_{3, 1} &= 0
+\end{align*}
+!et
+
+**Nodo (3,1)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{3-1, 1} - 4 T_{3, 1} + T_{3+1, 1} + T_{3, 1-1} + T_{3, 1+1} &= 0 \\
+    T_{2, 1} - 4 T_{3, 1} + T_{4, 1} + T_{3, 0} + T_{3, 2} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_15.svg">
+
+!bt
+\begin{align*}
+    T_{2, 1} - 4 T_{3, 1} + 50 + T_{3, 0} + T_{3, 2} &= 0 \\
+    T_{2, 1} + + T_{3, 0} - 4 T_{3, 1} + T_{3, 2} &= -50
+\end{align*}
+!et
+
+**Nodo (1,2)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{1-1, 2} - 4 T_{1, 2} + T_{1+1, 2} + T_{1, 2-1} + T_{1, 2+1} &= 0 \\
+    T_{0, 2} - 4 T_{1, 2} + T_{2, 2} + T_{1, 1} + T_{1, 3} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_16.svg">
+
+!bt
+\begin{align*}
+    75 - 4 T_{1, 2} + T_{2, 2} + T_{1, 1} + T_{1, 3} &= 0 \\
+    T_{1, 1} - 4 T_{1, 2} + T_{1, 3} + T_{2, 2} &= -75
+\end{align*}
+!et
+
+**Nodo (2,2)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{2-1, 2} - 4 T_{2, 2} + T_{2+1, 2} + T_{2, 2-1} + T_{2, 2+1} &= 0 \\
+    T_{1, 2} - 4 T_{2, 2} + T_{3, 2} + T_{2, 1} + T_{2, 3} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_17.svg">
+
+!bt
+\begin{align*}
+    T_{1, 2} + T_{2, 1} - 4 T_{2, 2} + T_{2, 3} + T_{3, 2} &= 0
+\end{align*}
+!et
+
+**Nodo (3,2)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{3-1, 2} - 4 T_{3, 2} + T_{3+1, 2} + T_{3, 2-1} + T_{3, 2+1} &= 0 \\
+    T_{2, 2} - 4 T_{3, 2} + T_{4, 2} + T_{3, 1} + T_{3, 3} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_18.svg">
+
+!bt
+\begin{align*}
+    T_{2, 2} - 4 T_{3, 2} + 50 + T_{3, 1} + T_{3, 3} &= 0 \\
+    T_{2, 2} + T_{3, 1} - 4 T_{3, 2} + T_{3, 3} &= -50
+\end{align*}
+!et
+
+**Nodo (1,3)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{1-1, 3} - 4 T_{1, 3} + T_{1+1, 3} + T_{1, 3-1} + T_{1, 3+1} &= 0 \\
+    T_{0, 3} - 4 T_{1, 3} + T_{2, 3} + T_{1, 2} + T_{1, 4} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_19.svg">
+
+!bt
+\begin{align*}
+    75 - 4 T_{1, 3} + T_{2, 3} + T_{1, 2} + 100 &= 0 \\
+    T_{1, 2} - 4 T_{1, 3} + T_{2, 3} &= -175
+\end{align*}
+!et
+
+**Nodo (2,3)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{2-1, 3} - 4 T_{2, 3} + T_{2+1, 3} + T_{2, 3-1} + T_{2, 3+1} &= 0 \\
+    T_{1, 3} - 4 T_{2, 3} + T_{3, 3} + T_{2, 2} + T_{2, 4} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_20.svg">
+
+!bt
+\begin{align*}
+    T_{1, 3} - 4 T_{2, 3} + T_{3, 3} + T_{2, 2} + 100 &= 0 \\
+    T_{1, 3} + T_{2, 2} - 4 T_{2, 3} + T_{3, 3} &= -100
+\end{align*}
+!et
+
+**Nodo (3,3)**
+
+!bt
+\begin{align*}
+    T_{i-1, j} - 4 T_{i, j} + T_{i+1, j} + T_{i, j-1} + T_{i, j+1} &= 0 \\
+    T_{3-1, 3} - 4 T_{3, 3} + T_{3+1, 3} + T_{3, 3-1} + T_{3, 3+1} &= 0 \\
+    T_{2, 3} - 4 T_{3, 3} + T_{4, 3} + T_{3, 2} + T_{3, 4} &= 0
+\end{align*}
+!et
+
+<img align="left" src="imagenes/005_DF01_21.svg">
+
+!bt
+\begin{align*}
+    T_{2, 3} - 4 T_{3, 3} + 50 + T_{3, 2} + 100 &= 0 \\
+    T_{2, 3} + T_{3, 2} - 4 T_{3, 3} &= -150
+\end{align*}
+!et
+
+Sistema de ecuaciones del problema
+
+!bt
+\begin{align*}
+    - 4 T_{1, 0} + 2 T_{1, 1} + T_{2, 0} &= -75 \\
+    T_{1, 0} - 4 T_{2, 0} + 2 T_{2, 1} + T_{3, 0} &= 0 \\
+    T_{2, 0} - 4 T_{3, 0} + 2 T_{3, 1} &= -50 \\
+    T_{1, 0} - 4 T_{1, 1} + T_{1, 2} + T_{2, 1} &= -75 \\
+    T_{1, 1} + T_{2, 0} - 4 T_{2, 1} + T_{2, 2} + T_{3, 1} &= 0 \\
+    T_{2, 1} + + T_{3, 0} - 4 T_{3, 1} + T_{3, 2} &= -50 \\
+    T_{1, 1} - 4 T_{1, 2} + T_{1, 3} + T_{2, 2} &= -75 \\
+    T_{1, 2} + T_{2, 1} - 4 T_{2, 2} + T_{2, 3} + T_{3, 2} &= 0 \\
+    T_{2, 2} + T_{3, 1} - 4 T_{3, 2} + T_{3, 3} &= -50 \\
+    T_{1, 2} - 4 T_{1, 3} + T_{2, 3} &= -175 \\
+    T_{1, 3} + T_{2, 2} - 4 T_{2, 3} + T_{3, 3} &= -100 \\
+    T_{2, 3} + T_{3, 2} - 4 T_{3, 3} &= -150
+\end{align*}
+!et
+
+en forma matricial
+
+!bt
+\begin{equation*}
+    \begin{bmatrix}
+    -4 & 2 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    1 & 0 & 0 & 0 & -4 & 2 & 0 & 0 & 1 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & -4 & 2 & 0 & 0 \\
+    1 & -4 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 & 1 & -4 & 1 & 0 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & -4 & 1 & 0 \\
+    0 & 1 & -4 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 1 & 0 & 0 & 1 & -4 & 1 & 0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & -4 & 1 \\
+    0 & 0 & 1 & -4 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 0 & 1 & -4 & 0 & 0 & 0 & 1 \\
+    0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & -4
+    \end{bmatrix}
+    \begin{bmatrix}
+    T_{1,0} \\
+    T_{1,1} \\
+    T_{1,2} \\
+    T_{1,3} \\
+    T_{2,0} \\
+    T_{2,1} \\
+    T_{2,2} \\
+    T_{2,3} \\
+    T_{3,0} \\
+    T_{3,1} \\
+    T_{3,2} \\
+    T_{3,3}
+    \end{bmatrix} =
+    \begin{bmatrix}
+    -75 \\
+    0 \\
+    -50 \\
+    -75 \\
+    0 \\
+    -50 \\
+    -75 \\
+    0 \\
+    -50 \\
+    -175 \\
+    -100 \\
+    -150
+    \end{bmatrix}
+\end{equation*}
+!et
+
+
+```julia
+C = [[-4 2 0 0 1 0 0 0 0 0 0 0],
+    [1 0 0 0 -4 2 0 0 1 0 0 0],
+    [0 0 0 0 1 0 0 0 -4 2 0 0],
+    [1 -4 1 0 0 1 0 0 0 0 0 0],
+    [0 1 0 0 1 -4 1 0 0 1 0 0],
+    [0 0 0 0 0 1 0 0 1 -4 1 0],
+    [0 1 -4 1 0 0 1 0 0 0 0 0],
+    [0 0 1 0 0 1 -4 1 0 0 1 0],
+    [0 0 0 0 0 0 1 0 0 1 -4 1],
+    [0 0 1 -4 0 0 0 1 0 0 0 0],
+    [0 0 0 1 0 0 1 -4 0 0 0 1],
+    [0 0 0 0 0 0 0 1 0 0 1 -4]];
+```
+
+
+```julia
+D = [[-75],
+    [0],
+    [-50],
+    [-75],
+    [0],
+    [-50],
+    [-75],
+    [0],
+    [-50],
+    [-175],
+    [-100],
+    [-150]];
+```
+
+
+```julia
+u = inv(C)*D;
+```
+
+
+```julia
+u = transpose(reshape(u, 4,3))
+
+for i=1:3
+    for j=1:4
+        println("T[$i,$(j-1)] = $(u[i,j])")
+    end
+end
+```
+
+    T[1,0] = 71.9073553216478
+    T[1,1] = 72.8074388953829
+    T[1,2] = 76.01510157957134
+    T[1,3] = 83.41092594700703
+    T[2,0] = 67.01454349582546
+    T[2,1] = 68.3072986803124
+    T[2,2] = 72.84204147589548
+    T[2,3] = 82.62860220845677
+    T[3,0] = 59.53622130102927
+    T[3,1] = 60.565170854145784
+    T[3,2] = 64.41716343524146
+    T[3,3] = 74.26144141092456
+

@@ -1,0 +1,299 @@
+
+# Método de diferencias finitas
+
+## Ecuación de conducción del calor
+
+En una dimensión
+
+!bt
+\begin{equation*}
+    k \frac{\partial^{2} T}{\partial x^{2}} = \frac{\partial T}{\partial t}
+\end{equation*}
+!et
+
+aproximando $T_{xx}$
+
+!bt
+\begin{equation*}
+    \frac{\partial^{2} T}{\partial x^{2}} = \frac{T^{l}_{i-1} - 2 T^{l}_{i} + T^{l}_{i+1}}{\Delta x^{2}}
+\end{equation*}
+!et
+
+aproximando $T_{t}$
+
+!bt
+\begin{equation*}
+    \frac{\partial T}{\partial t} = \frac{T^{l+1}_{i} - T^{l}_{i}}{\Delta t}
+\end{equation*}
+!et
+
+reemplazando
+
+!bt
+\begin{equation*}
+    k \frac{T^{l}_{i-1} - 2 T^{l}_{i} + T^{l}_{i+1}}{\Delta x^{2}} = \frac{T^{l+1}_{i} - T^{l}_{i}}{\Delta t}
+\end{equation*}
+!et
+
+despejando $T^{l+1}_{i}$
+
+!bt
+\begin{equation*}
+    T^{l+1}_{i} = T^{l}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{l}_{i-1} - 2 T^{l}_{i} + T^{l}_{i+1}) 
+\end{equation*}
+!et
+
+### Ejemplo
+
+Resolver
+
+!bt
+\begin{equation*}
+    k \frac{\partial^{2} T}{\partial x^{2}} = \frac{\partial T}{\partial t}
+\end{equation*}
+!et
+
+para
+
+!bt
+\begin{align*}
+    k &= 0.835 \\
+    T(0 < x < 10, 0.2) &= ?
+\end{align*}
+!et
+
+sujeto a
+
+!bt
+\begin{align*}
+    T(0, t) &= 100 \\
+    T(10, t) &= 50 \\
+    T(0 < x < 10, 0) &= 0
+\end{align*}
+!et
+
+para la solución numérica usamos
+
+!bt
+\begin{align*}
+    \Delta x &= 2 \\
+    \Delta t &= 0.1
+\end{align*}
+!et
+
+Condición inicial
+
+imagen
+
+!bt
+\begin{align*}
+    T^{0}_{0} &= 100 \\
+    T^{0}_{1} &= 0 \\
+    T^{0}_{2} &= 0 \\
+    T^{0}_{3} &= 0 \\
+    T^{0}_{4} &= 0 \\
+    T^{0}_{5} &= 50
+\end{align*}
+!et
+
+Para $l = 0$
+
+!bt
+\begin{align*}
+    T^{l+1}_{i} &= T^{l}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{l}_{i-1} - 2 T^{l}_{i} + T^{l}_{i+1}) \\
+    T^{0+1}_{i} &= T^{0}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{i-1} - 2 T^{0}_{i} + T^{0}_{i+1}) \\
+    T^{1}_{i} &= T^{0}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{i-1} - 2 T^{0}_{i} + T^{0}_{i+1})
+\end{align*}
+!et
+
+**Nodo 1**
+
+!bt
+\begin{align*}
+    T^{1}_{i} &= T^{0}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{i-1} - 2 T^{0}_{i} + T^{0}_{i+1}) \\
+    T^{1}_{1} &= T^{0}_{1} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{1-1} - 2 T^{0}_{1} + T^{0}_{1+1}) \\
+    T^{1}_{1} &= T^{0}_{1} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{0} - 2 T^{0}_{1} + T^{0}_{2})
+\end{align*}
+!et
+
+<img align="left" src="imagenes/006_DF02_1.svg">
+
+!bt
+\begin{equation*}
+    T^{1}_{1} = 0 + 0.835 \left( \frac{0.1}{2^{2}} \right) [100 - 2 (0) + 0] = 2.0875
+\end{equation*}
+!et
+
+**Nodo 2**
+
+!bt
+\begin{align*}
+    T^{1}_{i} &= T^{0}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{i-1} - 2 T^{0}_{i} + T^{0}_{i+1}) \\
+    T^{1}_{2} &= T^{0}_{2} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{2-1} - 2 T^{0}_{2} + T^{0}_{2+1}) \\
+    T^{1}_{2} &= T^{0}_{2} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{1} - 2 T^{0}_{2} + T^{0}_{3})
+\end{align*}
+!et
+
+<img align="left" src="imagenes/006_DF02_2.svg">
+
+!bt
+\begin{equation*}
+    T^{1}_{2} = 0 + 0.835 \left( \frac{0.1}{2^{2}} \right) [0 - 2 (0) + 0] = 0
+\end{equation*}
+!et
+
+**Nodo 3**
+
+!bt
+\begin{align*}
+    T^{1}_{i} &= T^{0}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{i-1} - 2 T^{0}_{i} + T^{0}_{i+1}) \\
+    T^{1}_{3} &= T^{0}_{3} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{3-1} - 2 T^{0}_{3} + T^{0}_{3+1}) \\
+    T^{1}_{3} &= T^{0}_{3} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{2} - 2 T^{0}_{3} + T^{0}_{4})
+\end{align*}
+!et
+
+<img align="left" src="imagenes/006_DF02_3.svg">
+
+!bt
+\begin{equation*}
+    T^{1}_{3} = 0 + 0.835 \left( \frac{0.1}{2^{2}} \right) [0 - 2 (0) + 0] = 0
+\end{equation*}
+!et
+
+**Nodo 4**
+
+!bt
+\begin{align*}
+    T^{1}_{i} &= T^{0}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{i-1} - 2 T^{0}_{i} + T^{0}_{i+1}) \\
+    T^{1}_{4} &= T^{0}_{4} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{4-1} - 2 T^{0}_{4} + T^{0}_{4+1}) \\
+    T^{1}_{4} &= T^{0}_{4} + k \frac{\Delta t}{\Delta x^{2}} (T^{0}_{3} - 2 T^{0}_{4} + T^{0}_{5})
+\end{align*}
+!et
+
+<img align="left" src="imagenes/006_DF02_4.svg">
+
+!bt
+\begin{equation*}
+    T^{1}_{4} = 0 + 0.835 \left( \frac{0.1}{2^{2}} \right) [0 - 2 (0) + 50] = 1.0438
+\end{equation*}
+!et
+
+Para $l = 1$
+
+!bt
+\begin{align*}
+    T^{l+1}_{i} &= T^{l}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{l}_{i-1} - 2 T^{l}_{i} + T^{l}_{i+1}) \\
+    T^{1+1}_{i} &= T^{1}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{i-1} - 2 T^{1}_{i} + T^{1}_{i+1}) \\
+    T^{2}_{i} &= T^{1}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{i-1} - 2 T^{1}_{i} + T^{1}_{i+1})
+\end{align*}
+!et
+
+**Nodo 1**
+
+!bt
+\begin{align*}
+    T^{2}_{i} &= T^{1}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{i-1} - 2 T^{1}_{i} + T^{1}_{i+1}) \\
+    T^{2}_{1} &= T^{1}_{1} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{1-1} - 2 T^{1}_{1} + T^{1}_{1+1}) \\
+    T^{2}_{i} &= T^{1}_{1} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{0} - 2 T^{1}_{1} + T^{1}_{2})
+\end{align*}
+!et
+
+<img align="left" src="imagenes/006_DF02_5.svg">
+
+!bt
+\begin{equation*}
+    T^{2}_{1} = 2.0875 + 0.835 \left( \frac{0.1}{2^{2}} \right) [100 - 2 (2.0875) + 0] = 4.0878
+\end{equation*}
+!et
+
+**Nodo 2**
+
+!bt
+\begin{align*}
+    T^{2}_{i} &= T^{1}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{i-1} - 2 T^{1}_{i} + T^{1}_{i+1}) \\
+    T^{2}_{2} &= T^{1}_{2} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{2-1} - 2 T^{1}_{2} + T^{1}_{2+1}) \\
+    T^{2}_{2} &= T^{1}_{2} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{1} - 2 T^{1}_{2} + T^{1}_{3})
+\end{align*}
+!et
+
+<img align="left" src="imagenes/006_DF02_6.svg">
+
+!bt
+\begin{equation*}
+    T^{2}_{2} = 0 + 0.835 \left( \frac{0.1}{2^{2}} \right) [2.0875 - 2 (0) + 0] = 0.0436
+\end{equation*}
+!et
+
+**Nodo 3**
+
+!bt
+\begin{align*}
+    T^{2}_{i} &= T^{1}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{i-1} - 2 T^{1}_{i} + T^{1}_{i+1}) \\
+    T^{2}_{3} &= T^{1}_{3} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{3-1} - 2 T^{1}_{3} + T^{1}_{3+1}) \\
+    T^{2}_{3} &= T^{1}_{3} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{2} - 2 T^{1}_{3} + T^{1}_{4})
+\end{align*}
+!et
+
+<img align="left" src="imagenes/006_DF02_7.svg">
+
+!bt
+\begin{equation*}
+    T^{2}_{3} = 0 + 0.835 \left( \frac{0.1}{2^{2}} \right) [0 - 2 (0) + 1.0438] = 0.0218
+\end{equation*}
+!et
+
+**Nodo 4**
+
+!bt
+\begin{align*}
+    T^{2}_{i} &= T^{1}_{i} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{i-1} - 2 T^{1}_{i} + T^{1}_{i+1}) \\
+    T^{2}_{4} &= T^{1}_{4} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{4-1} - 2 T^{1}_{4} + T^{1}_{4+1}) \\
+    T^{2}_{4} &= T^{1}_{4} + k \frac{\Delta t}{\Delta x^{2}} (T^{1}_{3} - 2 T^{1}_{4} + T^{1}_{5})
+\end{align*}
+!et
+
+<img align="left" src="imagenes/006_DF02_8.svg">
+
+!bt
+\begin{equation*}
+    T^{2}_{4} = 1.0438 + 0.835 \left( \frac{0.1}{2^{2}} \right) [0 - 2 (1.0438) + 50] = 2.0440
+\end{equation*}
+!et
+
+
+```julia
+filas = 3
+columnas = 6
+
+A = zeros(filas, columnas)
+
+for i=1:filas
+    A[i,1] = 100
+    A[i,columnas] = 50
+end
+
+k = 0.835
+Δx = 2.0
+Δt = 0.1
+
+for i=2:filas
+    for j=2:columnas - 1
+        A[i,j] = A[i-1,j] + (k * (Δt/Δx^2) * (A[i-1,j-1] - (2*A[i-1,j]) + A[i-1,j+1]))
+    end
+end
+```
+
+
+```julia
+A
+```
+
+
+
+
+    3x6 Array{Float64,2}:
+     100.0  0.0      0.0        0.0        0.0      50.0
+     100.0  2.0875   0.0        0.0        1.04375  50.0
+     100.0  4.08785  0.0435766  0.0217883  2.04392  50.0
+
+

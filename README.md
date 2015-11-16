@@ -10,7 +10,7 @@ Sistema operativo: Multiplataforma
   * A
   * B
   * C
-2. Ecuaciones diferenciales ordinarias 
+2. Ecuaciones diferenciales ordinarias
   * Modelos matemáticos
   * Errores
   * Método de Euler
@@ -26,6 +26,9 @@ Sistema operativo: Multiplataforma
   * Polinomios de Lagrange
     * Coordenadas globales
     * Coordenadas locales
+  * Polinomios de Hermite
+    * Coordenadas globales
+    * Coordenadas locales
   * Elemento barra en tracción-compresión
     * Coordenadas globales
       * Ejemplo 1
@@ -36,9 +39,6 @@ Sistema operativo: Multiplataforma
       * Ejemplo 2
       * Ejemplo 3
   * Elemento barra en torsión
-  * Polinomios de Hermite
-    * Coordenadas globales
-    * Coordenadas locales
   * Elemento viga Euler-Bernoulli
     * Coordenadas globales
       * Ejemplo 1
@@ -46,14 +46,20 @@ Sistema operativo: Multiplataforma
     * Coordenadas locales
       * Ejemplo 1
       * Ejemplo 2
-  * Coordenadas naturales
-    * Elemento barra
-    * Ejemplo 3
-      * Elemento barra
-    * Elemento viga Euler-Bernoulli
+  * Polinomios de Lagrange
+    * Coordenadas naturales
+  * Polinomios de Hermite
+    * Coordenadas naturales
+  * Elemento barra en tracción-compresión
+    * Coordenadas naturales
+      * Ejemplo 1
+      * Ejemplo 2
+      * Ejemplo 3
+  * Elemento viga Euler-Bernoulli
+    * Coordenadas globales
   * Funciones de forma bidimensionales
     * Elementos triangulares
       * Coordenadas globales
-  * Esfuerzo plano 
+  * Esfuerzo plano
 7. Elementos finitos discontinuos
 8. Elementos finitos mixtos
