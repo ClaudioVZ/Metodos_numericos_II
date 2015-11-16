@@ -60,6 +60,7 @@ Sistema operativo: Multiplataforma
   * Funciones de forma bidimensionales
     * Elementos triangulares
       * Coordenadas globales
-  * Esfuerzo plano
+  * Elasticidad plana
+    * Esfuerzo plano
 7. Elementos finitos discontinuos
 8. Elementos finitos mixtos
